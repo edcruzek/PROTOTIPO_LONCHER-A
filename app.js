@@ -142,21 +142,46 @@ const screens = [
 ];
 
 const inventoryItems = [
-  { name: "Tortillas", stock: "42 paquetes", status: "Suficiente" },
-  { name: "Pollo", stock: "8 kg", status: "Revisar" },
-  { name: "Arroz", stock: "12 kg", status: "Suficiente" },
-  { name: "Agua de horchata", stock: "5 litros", status: "Bajo" },
-  { name: "Verduras mixtas", stock: "7 kg", status: "Suficiente" },
-  { name: "Desechables", stock: "35 piezas", status: "Revisar" }
+  { name: "Pechuga de Pollo", category: "Proteinas", stock: "1.5 kg (Critico)", level: 10, tone: "critical", action: "Reordenar ahora" },
+  { name: "Frijol Negro", category: "Granos y Legumbres", stock: "5 kg (Bajo)", level: 30, tone: "low", action: "Agregar a lista" },
+  { name: "Arroz Blanco", category: "Granos y Legumbres", stock: "25 kg (Saludable)", level: 84, tone: "healthy", action: "Ver detalles" },
+  { name: "Aceite Vegetal", category: "Alacena", stock: "12 L (Saludable)", level: 68, tone: "healthy", action: "Ver detalles" },
+  { name: "Tomate Roma", category: "Verduras", stock: "0.5 kg (Critico)", level: 5, tone: "critical", action: "Reordenar ahora" }
 ];
 
 const dishes = [
-  { name: "Menu del dia", price: "$85", detail: "Guiso, arroz, frijol y agua" },
-  { name: "Pechuga asada", price: "$95", detail: "Con ensalada y sopa" },
-  { name: "Tacos dorados", price: "$72", detail: "Orden de 4 piezas" },
-  { name: "Sopa de pasta", price: "$35", detail: "Porcion individual" },
-  { name: "Consome", price: "$40", detail: "Caldo con arroz y verduras" },
-  { name: "Agua fresca", price: "$25", detail: "Horchata, jamaica o limon" }
+  {
+    name: "Chilaquiles Rojos",
+    price: "$85.00",
+    detail: "Crujientes totopos banados en salsa roja...",
+    status: "Activo",
+    tone: "active",
+    image: "assets/chilaquiles.png"
+  },
+  {
+    name: "Caldo de Pollo",
+    price: "$110.00",
+    detail: "Consome tradicional con verduras de temporada...",
+    status: "Pocas piezas",
+    tone: "low",
+    image: "assets/caldo-pollo.png"
+  },
+  {
+    name: "Tacos Dorados",
+    price: "$95.00",
+    detail: "Orden de 4 tacos rellenos de pollo o papa...",
+    status: "Agotado",
+    tone: "soldout",
+    image: "assets/tacos-dorados.png"
+  },
+  {
+    name: "Enchiladas Suizas",
+    price: "$120.00",
+    detail: "Tortillas rellenas de pollo, banadas en salsa...",
+    status: "Activo",
+    tone: "active",
+    image: ""
+  }
 ];
 
 const content = document.querySelector("#content");
@@ -242,32 +267,100 @@ function renderOrders() {
 
 function renderInventory() {
   content.innerHTML = `
-    ${titleBlock("Inventario", "Consulta existencias y productos que necesitan revision.")}
-    <div class="data-grid">
-      ${inventoryItems.map((item) => `
-        <article class="data-card">
-          <div>
+    <div class="page-head">
+      <div>
+        <h1>Panel de Inventario</h1>
+        <p>Monitoreo de stock en tiempo real y gestion de reorden.</p>
+      </div>
+      <button class="hero-action" type="button"><span>+</span> Agregar Ingrediente</button>
+    </div>
+
+    <div class="metric-row">
+      <article class="inventory-metric">
+        <span class="metric-icon box-icon"></span>
+        <div><small>Total de Ingredientes</small><strong>84</strong></div>
+      </article>
+      <article class="inventory-metric danger">
+        <span class="metric-icon alert-icon"></span>
+        <div><small>Alertas Criticas</small><strong>2</strong></div>
+      </article>
+      <article class="inventory-metric">
+        <span class="metric-icon truck-icon"></span>
+        <div><small>Entregas Pendientes</small><strong>5</strong></div>
+      </article>
+    </div>
+
+    <div class="pill-row">
+      <button class="selected" type="button">Todos</button>
+      <button type="button">Proteinas</button>
+      <button type="button">Granos y Legumbres</button>
+      <button type="button">Verduras</button>
+      <button type="button">Lacteos</button>
+    </div>
+
+    <div class="inventory-grid">
+      ${inventoryItems.map((item) => {
+        const symbol = item.tone === "healthy" ? "✓" : item.tone === "low" ? "△" : "!";
+        return `
+          <article class="stock-card ${item.tone}">
+            <div class="stock-top">
+              <span class="stock-category">${item.category}</span>
+              <span class="stock-signal">${symbol}</span>
+            </div>
             <h2>${item.name}</h2>
-            <p>${item.stock}</p>
-          </div>
-          <span class="status-pill">${item.status}</span>
-        </article>
-      `).join("")}
+            <div class="stock-line">
+              <span>Nivel de Stock</span>
+              <strong>${item.stock}</strong>
+            </div>
+            <div class="stock-track"><span style="width: ${item.level}%"></span></div>
+            <button type="button">${item.action}</button>
+          </article>
+        `;
+      }).join("")}
     </div>
   `;
 }
 
 function renderDishes() {
   content.innerHTML = `
-    ${titleBlock("Platillos", "Lista de productos disponibles para venta.")}
-    <div class="data-grid">
+    <div class="page-head">
+      <div>
+        <h1>Gestion de Platillos</h1>
+      </div>
+      <button class="hero-action" type="button"><span>+</span> Agregar Platillo</button>
+    </div>
+
+    <div class="dish-toolbar">
+      <label class="inline-search">
+        <span class="search-icon"></span>
+        <input type="search" placeholder="Buscar platillo por nombre..." />
+      </label>
+      <div class="pill-row compact">
+        <button class="selected" type="button">Todos</button>
+        <button type="button">Desayunos</button>
+        <button type="button">Comidas</button>
+        <button type="button">Bebidas</button>
+      </div>
+    </div>
+
+    <div class="dish-grid">
       ${dishes.map((dish) => `
-        <article class="menu-card">
-          <div>
+        <article class="dish-card ${dish.tone}">
+          <div class="dish-image ${dish.image ? "" : "missing"}" ${dish.image ? `style="background-image: url('${dish.image}')"` : ""}>
+            <span class="dish-status">${dish.status}</span>
+            ${dish.image ? "" : "<span class=\"missing-icon\"></span>"}
+          </div>
+          <div class="dish-body">
             <h2>${dish.name}</h2>
             <p>${dish.detail}</p>
+            <div class="dish-bottom">
+              <strong>${dish.price}</strong>
+              <div class="round-actions">
+                <button type="button" aria-label="Editar">✎</button>
+                <button type="button" aria-label="Eliminar">⌫</button>
+              </div>
+            </div>
           </div>
-          <strong>${dish.price}</strong>
         </article>
       `).join("")}
     </div>
@@ -276,21 +369,60 @@ function renderDishes() {
 
 function renderStats() {
   content.innerHTML = `
-    ${titleBlock("Estadisticas", "Resumen rapido del servicio de hoy.")}
-    <div class="stats-grid">
-      <article class="stat-card"><span>Ordenes</span><strong>24</strong><p>8 pendientes</p></article>
-      <article class="stat-card"><span>Ventas</span><strong>$3,420</strong><p>Turno vespertino</p></article>
-      <article class="stat-card"><span>Tiempo promedio</span><strong>18 min</strong><p>Preparacion por pedido</p></article>
-      <article class="stat-card"><span>Producto lider</span><strong>Menu del dia</strong><p>12 ordenes</p></article>
+    <div class="page-head">
+      <div>
+        <h1>Resumen de Analiticas</h1>
+        <p>Revision de metricas de rendimiento para tu Cocina Economica.</p>
+      </div>
+      <div class="date-picker"><button type="button">‹</button><span>▣ Hoy, 24 Oct</span><button type="button">›</button></div>
     </div>
-    <div class="mini-chart" aria-label="Grafica de actividad">
-      <span style="height: 42%"></span>
-      <span style="height: 66%"></span>
-      <span style="height: 48%"></span>
-      <span style="height: 78%"></span>
-      <span style="height: 58%"></span>
-      <span style="height: 88%"></span>
-      <span style="height: 72%"></span>
+
+    <div class="analytics-grid">
+      <article class="revenue-card">
+        <div class="revenue-head">
+          <span>Ingresos Diarios</span>
+          <i>▣</i>
+        </div>
+        <div class="revenue-value">$14,250.00 <small>↗ +12%</small></div>
+        <div class="revenue-bars">
+          <span style="height: 28%"></span>
+          <span style="height: 42%"></span>
+          <span style="height: 35%"></span>
+          <span style="height: 58%"></span>
+          <span style="height: 50%"></span>
+          <span class="today" style="height: 72%"></span>
+        </div>
+      </article>
+
+      <div class="analytics-stack">
+        <article class="small-kpi"><span>Total de Tickets</span><strong>285</strong></article>
+        <article class="small-kpi"><span>Ticket Promedio</span><strong>$50.00</strong></article>
+      </div>
+
+      <article class="peak-card">
+        <h2>◷ Horas Pico</h2>
+        <strong>14:00 - 16:00</strong>
+        <p>Mayor volumen de ordenes</p>
+        <div class="hour-track"><span></span><b></b><span></span></div>
+        <div class="hour-labels"><small>12pm</small><small>2pm</small><small>6pm</small></div>
+      </article>
+
+      <article class="best-dish">
+        <img src="assets/enchiladas.png" alt="Enchiladas Suizas" />
+        <div>
+          <span>Platillo Mas Vendido</span>
+          <h2>Enchiladas Suizas</h2>
+          <p>Unidades Vendidas <strong>142</strong></p>
+          <p>Contribucion a Ingresos <strong>$8,520.00</strong></p>
+        </div>
+      </article>
+
+      <article class="category-card">
+        <h2>Ventas por Categoria</h2>
+        <div class="category-line"><span>Comida Corrida (Menu del Dia)</span><strong>65%</strong><i style="--w:65%; --c:#b91f0b"></i></div>
+        <div class="category-line"><span>A la Carta</span><strong>25%</strong><i style="--w:25%; --c:#7d5300"></i></div>
+        <div class="category-line"><span>Bebidas</span><strong>10%</strong><i style="--w:10%; --c:#16742c"></i></div>
+      </article>
     </div>
   `;
 }
@@ -329,10 +461,10 @@ function renderDots() {
 
 function updateSearchPlaceholder() {
   const labels = {
-    inventario: "Buscar inventario...",
+    inventario: "Buscar ingredientes...",
     ordenes: "Buscar ordenes...",
-    platillos: "Buscar platillos...",
-    estadisticas: "Buscar metricas...",
+    platillos: "Buscar platillo...",
+    estadisticas: "Buscar ordenes o platillos...",
     ajustes: "Buscar ajustes...",
     salir: "Buscar..."
   };
@@ -358,6 +490,7 @@ function render() {
   renderDots();
   updateNav();
   updateSearchPlaceholder();
+  document.querySelector(".prototype-shell").dataset.view = currentView;
 }
 
 function setView(view) {
