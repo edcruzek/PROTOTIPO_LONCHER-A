@@ -1495,3 +1495,505 @@ p,
     grid-column: auto;
   }
 }
+
+/* Scale fixes for laptops and phones. */
+.prototype-shell {
+  grid-template-columns: clamp(210px, 18vw, 260px) minmax(0, 1fr);
+}
+
+.sidebar {
+  padding: clamp(22px, 2vw, 32px) 16px 24px;
+}
+
+.brand {
+  min-height: 58px;
+  padding-left: 64px;
+  margin-bottom: 28px;
+}
+
+.brand::before {
+  left: 12px;
+  width: 44px;
+  height: 44px;
+}
+
+.brand strong {
+  font-size: clamp(24px, 2vw, 30px);
+}
+
+.brand span {
+  font-size: 13px;
+}
+
+.nav-group,
+.nav-footer {
+  gap: 8px;
+}
+
+.nav-item {
+  min-height: 48px;
+  grid-template-columns: 26px 1fr;
+  padding: 0 14px;
+  font-size: 15px;
+}
+
+.nav-item.quiet {
+  min-height: 44px;
+  font-size: 14px;
+}
+
+.icon,
+.search-icon,
+.icon-button::before {
+  width: 20px;
+  height: 20px;
+}
+
+.topbar {
+  height: 64px;
+  padding-inline: clamp(16px, 2vw, 26px);
+}
+
+.search {
+  width: min(460px, 52vw);
+  height: 46px;
+}
+
+.search input {
+  font-size: 15px;
+}
+
+.content {
+  padding: clamp(20px, 2.4vw, 30px);
+}
+
+h1,
+.page-head h1 {
+  font-size: clamp(30px, 3vw, 38px);
+}
+
+p,
+.page-head p {
+  font-size: clamp(14px, 1.4vw, 18px);
+}
+
+.page-head,
+.title-row {
+  margin-bottom: 24px;
+}
+
+.hero-action {
+  min-width: 180px;
+  height: 48px;
+  gap: 10px;
+  font-size: 14px;
+}
+
+.hero-action span {
+  font-size: 24px;
+}
+
+.metric-row {
+  grid-template-columns: repeat(3, minmax(180px, 1fr));
+  gap: 14px;
+  margin-bottom: 22px;
+}
+
+.inventory-metric {
+  min-height: 92px;
+  gap: 14px;
+  padding: 16px;
+}
+
+.metric-icon {
+  width: 56px;
+  height: 56px;
+}
+
+.inventory-metric strong {
+  font-size: 32px;
+}
+
+.inventory-metric small,
+.small-kpi span,
+.revenue-head span {
+  font-size: 11px;
+}
+
+.pill-row {
+  gap: 8px;
+  margin-bottom: 26px;
+}
+
+.pill-row button {
+  height: 44px;
+  padding: 0 18px;
+  font-size: 14px;
+}
+
+.inventory-grid {
+  grid-template-columns: repeat(auto-fit, minmax(210px, 290px));
+  justify-content: start;
+  gap: 16px;
+}
+
+.stock-card {
+  min-height: 220px;
+  padding: 18px 16px 16px;
+}
+
+.stock-card h2 {
+  margin-bottom: 20px;
+  font-size: 21px;
+}
+
+.stock-line {
+  font-size: 12px;
+}
+
+.stock-card button {
+  height: 46px;
+  font-size: 14px;
+}
+
+.dish-toolbar {
+  gap: 14px;
+  margin-bottom: 24px;
+  padding: 14px;
+}
+
+.inline-search {
+  width: min(430px, 42vw);
+  height: 54px;
+}
+
+.inline-search input {
+  font-size: 17px;
+}
+
+.dish-grid {
+  grid-template-columns: repeat(auto-fit, minmax(220px, 290px));
+  justify-content: start;
+  gap: 16px;
+}
+
+.dish-image {
+  height: 170px;
+}
+
+.dish-body {
+  padding: 16px;
+}
+
+.dish-body h2 {
+  font-size: 22px;
+}
+
+.dish-body p {
+  min-height: 44px;
+  margin: 9px 0 16px;
+  font-size: 15px;
+}
+
+.dish-bottom strong {
+  font-size: 25px;
+}
+
+.round-actions button {
+  width: 38px;
+  height: 38px;
+  font-size: 18px;
+}
+
+.analytics-grid {
+  grid-template-columns: minmax(0, 1.6fr) minmax(190px, 0.8fr) minmax(210px, 0.8fr);
+  gap: 16px;
+}
+
+.revenue-card,
+.small-kpi,
+.peak-card,
+.best-dish,
+.category-card {
+  border-radius: 10px;
+}
+
+.revenue-card,
+.peak-card,
+.category-card {
+  padding: 18px;
+}
+
+.revenue-value {
+  font-size: 32px;
+}
+
+.revenue-bars {
+  height: 70px;
+}
+
+.revenue-bars span {
+  min-width: 28px;
+}
+
+.small-kpi {
+  min-height: 90px;
+  padding: 18px;
+}
+
+.small-kpi strong,
+.peak-card strong {
+  font-size: 28px;
+}
+
+.best-dish {
+  grid-template-columns: 190px 1fr;
+}
+
+.best-dish img {
+  height: 210px;
+}
+
+.best-dish div {
+  padding: 28px 18px;
+}
+
+.best-dish p {
+  font-size: 15px;
+}
+
+@media (max-width: 1100px) {
+  .prototype-shell {
+    grid-template-columns: 190px minmax(0, 1fr);
+  }
+
+  .brand {
+    padding-left: 0;
+  }
+
+  .brand::before {
+    display: none;
+  }
+
+  .nav-item {
+    padding-inline: 10px;
+    font-size: 13px;
+  }
+
+  .metric-row,
+  .analytics-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .best-dish {
+    grid-column: auto;
+  }
+}
+
+@media (max-width: 760px) {
+  body {
+    overflow-x: hidden;
+  }
+
+  .prototype-shell {
+    display: block;
+    min-height: 100vh;
+  }
+
+  .sidebar {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    padding: 14px;
+    border-right: 0;
+    border-bottom: 1px solid var(--line-soft);
+  }
+
+  .brand {
+    min-height: auto;
+    margin-bottom: 12px;
+  }
+
+  .brand strong {
+    font-size: 24px;
+  }
+
+  .brand span {
+    font-size: 12px;
+  }
+
+  .nav-group,
+  .nav-footer {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding-bottom: 3px;
+  }
+
+  .nav-footer {
+    margin-top: 8px;
+    padding-top: 8px;
+  }
+
+  .nav-item,
+  .nav-item.quiet {
+    flex: 0 0 auto;
+    width: auto;
+    min-height: 38px;
+    grid-template-columns: 18px auto;
+    padding: 0 12px;
+    font-size: 12px;
+  }
+
+  .icon,
+  .search-icon,
+  .icon-button::before {
+    width: 16px;
+    height: 16px;
+  }
+
+  .topbar {
+    height: auto;
+    gap: 12px;
+    padding: 12px 14px;
+  }
+
+  .search {
+    width: min(100%, 360px);
+    height: 42px;
+    gap: 10px;
+  }
+
+  .prototype-shell[data-view="platillos"] .search,
+  .prototype-shell[data-view="ajustes"] .search,
+  .prototype-shell[data-view="salir"] .search {
+    display: none;
+  }
+
+  .topbar-actions {
+    gap: 12px;
+    margin-left: auto;
+  }
+
+  .icon-button {
+    width: 28px;
+    height: 28px;
+  }
+
+  .content {
+    padding: 18px 14px 28px;
+  }
+
+  .page-head,
+  .title-row {
+    flex-direction: column;
+    gap: 14px;
+    margin-bottom: 18px;
+  }
+
+  h1,
+  .page-head h1 {
+    font-size: 28px;
+  }
+
+  p,
+  .page-head p {
+    font-size: 14px;
+  }
+
+  .hero-action {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .orders,
+  .inventory-grid,
+  .dish-grid,
+  .data-grid,
+  .stats-grid {
+    grid-template-columns: 1fr;
+    max-width: none;
+  }
+
+  .metric-row {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .inventory-metric {
+    min-height: 78px;
+  }
+
+  .pill-row {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    margin-bottom: 18px;
+  }
+
+  .pill-row button {
+    flex: 0 0 auto;
+    height: 40px;
+    padding-inline: 16px;
+    font-size: 13px;
+  }
+
+  .dish-toolbar {
+    display: block;
+    padding: 12px;
+  }
+
+  .inline-search {
+    width: 100%;
+    height: 46px;
+    margin-bottom: 12px;
+  }
+
+  .inline-search input {
+    font-size: 14px;
+  }
+
+  .dish-image {
+    height: 170px;
+  }
+
+  .analytics-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .date-picker {
+    width: 100%;
+    justify-content: space-between;
+    height: 46px;
+  }
+
+  .revenue-value {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 8px;
+    font-size: 28px;
+  }
+
+  .revenue-bars span {
+    min-width: 0;
+  }
+
+  .best-dish {
+    display: block;
+  }
+
+  .best-dish img {
+    height: 170px;
+  }
+
+  .best-dish div {
+    padding: 18px;
+  }
+
+  .best-dish p {
+    display: block;
+  }
+
+  .category-line {
+    font-size: 13px;
+  }
+}
