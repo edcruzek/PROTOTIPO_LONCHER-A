@@ -419,6 +419,11 @@ p {
   padding: 18px;
 }
 
+.empty-state.compact {
+  width: min(420px, 100%);
+  margin-top: 8px;
+}
+
 .card {
   min-height: 246px;
   display: flex;
@@ -553,6 +558,12 @@ p {
   border-color: var(--brand);
   color: #fff;
   background: var(--brand);
+}
+
+.actions .secondary {
+  border-color: #d8c4bb;
+  color: var(--brand);
+  background: var(--brand-soft);
 }
 
 .prototype-controls {

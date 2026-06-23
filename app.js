@@ -167,6 +167,7 @@ const searchInput = document.querySelector("#searchInput");
 const navButtons = document.querySelectorAll("[data-view]");
 let currentScreen = 0;
 let currentView = "ordenes";
+let orderFilter = "pendientes";
 
 function titleBlock(title, subtitle, extra = "") {
   return `
@@ -182,6 +183,10 @@ function titleBlock(title, subtitle, extra = "") {
 
 function orderTemplate(order) {
   const badgeClass = order.tone === "warning" ? "badge warning" : "badge";
+  const button = order.completed
+    ? `<button class="primary secondary" type="button" data-restore-order="${order.id}">Regresar</button>`
+    : `<button class="primary" type="button" data-complete-order="${order.id}">Marcar lista</button>`;
+
   return `
     <article class="card">
       <div class="card-head">
@@ -205,7 +210,7 @@ function orderTemplate(order) {
 
       <div class="actions">
         <button type="button">Detalles</button>
-        <button class="primary" type="button">Marcar lista</button>
+        ${button}
       </div>
     </article>
   `;
@@ -214,13 +219,24 @@ function orderTemplate(order) {
 function renderOrders() {
   const filters = `
     <div class="segmented" role="tablist" aria-label="Estado de ordenes">
-      <button class="selected" type="button">Pendientes</button>
-      <button type="button">Completadas</button>
+      <button class="${orderFilter === "pendientes" ? "selected" : ""}" type="button" data-order-filter="pendientes">Pendientes</button>
+      <button class="${orderFilter === "completadas" ? "selected" : ""}" type="button" data-order-filter="completadas">Completadas</button>
     </div>
   `;
+  const visibleOrders = screens[currentScreen].orders.filter((order) => {
+    return orderFilter === "completadas" ? order.completed : !order.completed;
+  });
+  const emptyMessage = orderFilter === "completadas"
+    ? "Todavia no hay ordenes completadas."
+    : "No hay ordenes pendientes en esta pantalla.";
+
   content.innerHTML = `
     ${titleBlock("Ordenes activas", "Administra pedidos entrantes y tickets en proceso.", filters)}
-    <div class="orders" id="orders">${screens[currentScreen].orders.map(orderTemplate).join("")}</div>
+    ${
+      visibleOrders.length
+        ? `<div class="orders" id="orders">${visibleOrders.map(orderTemplate).join("")}</div>`
+        : `<div class="empty-state compact"><h2>${emptyMessage}</h2><p>Cambia de pantalla o revisa el otro estado.</p></div>`
+    }
   `;
 }
 
@@ -355,6 +371,16 @@ function goTo(index) {
   render();
 }
 
+function updateOrderStatus(orderId, completed) {
+  const order = screens[currentScreen].orders.find((item) => item.id === orderId);
+  if (!order) return;
+  order.completed = completed;
+  order.status = completed ? "Completada" : "Pendiente";
+  order.tone = completed ? "warning" : "danger";
+  if (completed) orderFilter = "completadas";
+  render();
+}
+
 prev.addEventListener("click", () => goTo(currentScreen - 1));
 next.addEventListener("click", () => goTo(currentScreen + 1));
 
@@ -364,7 +390,25 @@ dots.addEventListener("click", (event) => {
 });
 
 content.addEventListener("click", (event) => {
-  if (event.target.matches(".primary")) goTo(currentScreen + 1);
+  const completeButton = event.target.closest("[data-complete-order]");
+  if (completeButton) {
+    updateOrderStatus(completeButton.dataset.completeOrder, true);
+    return;
+  }
+
+  const restoreButton = event.target.closest("[data-restore-order]");
+  if (restoreButton) {
+    updateOrderStatus(restoreButton.dataset.restoreOrder, false);
+    return;
+  }
+
+  const filterButton = event.target.closest("[data-order-filter]");
+  if (filterButton) {
+    orderFilter = filterButton.dataset.orderFilter;
+    render();
+    return;
+  }
+
   const viewTarget = event.target.closest("[data-view-target]");
   if (viewTarget) setView(viewTarget.dataset.viewTarget);
 });
