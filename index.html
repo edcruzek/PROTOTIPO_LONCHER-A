@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>La Pavoneria - Prototipo</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="prototype-shell" aria-label="Prototipo de escritorio">
+      <aside class="sidebar" aria-label="Navegacion principal">
+        <div class="brand">
+          <strong>Sazon</strong>
+          <span>Casa Economica</span>
+        </div>
+
+        <nav class="nav-group" aria-label="Secciones">
+          <button class="nav-item" type="button" data-view="inventario" aria-label="Inventario">
+            <span class="icon inventory-icon"></span>
+            <span>Inventario</span>
+          </button>
+          <button class="nav-item active" type="button" data-view="ordenes" aria-label="Ordenes">
+            <span class="icon orders-icon"></span>
+            <span>Ordenes</span>
+          </button>
+          <button class="nav-item" type="button" data-view="platillos" aria-label="Platillos">
+            <span class="icon dishes-icon"></span>
+            <span>Platillos</span>
+          </button>
+          <button class="nav-item" type="button" data-view="estadisticas" aria-label="Estadisticas">
+            <span class="icon stats-icon"></span>
+            <span>Estadisticas</span>
+          </button>
+        </nav>
+
+        <nav class="nav-footer" aria-label="Cuenta">
+          <button class="nav-item quiet" type="button" data-view="ajustes" aria-label="Ajustes">
+            <span class="icon settings-icon"></span>
+            <span>Ajustes</span>
+          </button>
+          <button class="nav-item quiet" type="button" data-view="salir" aria-label="Salir">
+            <span class="icon logout-icon"></span>
+            <span>Salir</span>
+          </button>
+        </nav>
+      </aside>
+
+      <section class="workspace">
+        <header class="topbar">
+          <label class="search">
+            <span class="search-icon"></span>
+            <input id="searchInput" type="search" placeholder="Buscar ordenes..." aria-label="Buscar" />
+          </label>
+          <div class="topbar-actions" aria-label="Acciones">
+            <button class="icon-button bell-icon" type="button" aria-label="Notificaciones"></button>
+            <button class="icon-button profile-icon" type="button" aria-label="Perfil"></button>
+          </div>
+        </header>
+
+        <div class="content" id="content" aria-live="polite"></div>
+      </section>
+    </main>
+
+    <div class="prototype-controls" aria-label="Controles del prototipo">
+      <button id="prevScreen" type="button">Anterior</button>
+      <div class="dots" id="screenDots" aria-label="Pantallas"></div>
+      <button id="nextScreen" type="button">Siguiente</button>
+    </div>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
