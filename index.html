@@ -3,33 +3,39 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>La Pavoneria - Prototipo</title>
-    <link rel="stylesheet" href="./styles.css" />
+    <title>La Pavonería - Prototipo</title>
+    <link rel="stylesheet" href="./styles.css?v=demo-20260625-2" />
   </head>
   <body>
     <main class="prototype-shell" aria-label="Prototipo de escritorio">
-      <aside class="sidebar" aria-label="Navegacion principal">
+      <aside class="sidebar" aria-label="Navegación principal">
         <div class="brand">
-          <strong>Sazon</strong>
-          <span>Casa Economica</span>
+          <strong>La Pavonería</strong>
+          <span>Lonchería</span>
         </div>
 
         <nav class="nav-group" aria-label="Secciones">
-          <button class="nav-item" type="button" data-view="inventario" aria-label="Inventario">
-            <span class="icon inventory-icon"></span>
-            <span>Inventario</span>
-          </button>
-          <button class="nav-item active" type="button" data-view="ordenes" aria-label="Ordenes">
+          <button class="nav-item active" type="button" data-view="ordenes-control" aria-label="Órdenes">
             <span class="icon orders-icon"></span>
-            <span>Ordenes</span>
+            <span>Órdenes</span>
           </button>
+          <div class="subnav" aria-label="Opciones de órdenes">
+            <button class="subnav-item active" type="button" data-view="ordenes-control">
+              <span></span>
+              <strong>Control de pedidos</strong>
+            </button>
+            <button class="subnav-item" type="button" data-view="ordenes-historial">
+              <span></span>
+              <strong>Historial de pedidos</strong>
+            </button>
+          </div>
           <button class="nav-item" type="button" data-view="platillos" aria-label="Platillos">
             <span class="icon dishes-icon"></span>
             <span>Platillos</span>
           </button>
-          <button class="nav-item" type="button" data-view="estadisticas" aria-label="Estadisticas">
+          <button class="nav-item" type="button" data-view="estadisticas" aria-label="Estadísticas">
             <span class="icon stats-icon"></span>
-            <span>Estadisticas</span>
+            <span>Estadísticas</span>
           </button>
         </nav>
 
@@ -49,7 +55,7 @@
         <header class="topbar">
           <label class="search">
             <span class="search-icon"></span>
-            <input id="searchInput" type="search" placeholder="Buscar ordenes..." aria-label="Buscar" />
+            <input id="searchInput" type="search" placeholder="Buscar órdenes..." aria-label="Buscar" />
           </label>
           <div class="topbar-actions" aria-label="Acciones">
             <button class="icon-button bell-icon" type="button" aria-label="Notificaciones"></button>
@@ -67,6 +73,6 @@
       <button id="nextScreen" type="button">Siguiente</button>
     </div>
 
-    <script src="./app.js"></script>
+    <script src="./app.js?v=demo-20260625-2"></script>
   </body>
 </html>
