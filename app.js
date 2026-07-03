@@ -427,7 +427,7 @@ function renderOrderDetail() {
       </section>
       <aside class="detail-side">
         <article><h2>Acciones rápidas</h2>${isActive ? `<button class="primary" data-next-status="${order.id}">Cambiar estado</button><button data-print-ticket="${order.id}">Vista previa del ticket</button><button data-cancel-order="${order.id}">Cancelar pedido</button>` : `<button data-repeat-order="${order.id}">Repetir pedido</button><button data-print-ticket="${order.id}">Vista previa del ticket</button>`}</article>
-        <article><h2>Tiempo estimado</h2><p>Selecciona o ajusta el tiempo estimado de preparación.</p><div class="time-buttons">${[15, 20, 25].map((min) => `<button class="${order.prepMinutes === min ? "selected" : ""}" data-prep-time="${min}">${min} min</button>`).join("")}</div><label><input value="${order.prepMinutes || 20}" data-prep-input /> min</label></article>
+        <article><h2>Tiempo estimado</h2><p>Ajusta el tiempo estimado de preparación.</p><div class="time-buttons">${[15, 20, 25].map((min) => `<button class="${order.prepMinutes === min ? "selected" : ""}" data-prep-time="${min}">${min} min</button>`).join("")}</div><label><input value="${order.prepMinutes || 20}" data-prep-input /> min</label></article>
         <article><h2>Resumen operativo</h2><p>Estado <strong>${isActive ? statusLabels[order.status] : order.status}</strong></p><p>Tipo <strong>${order.type}</strong></p><p>Prioridad <strong>${order.priority ? "Alta" : "Normal"}</strong></p><p>Preparación estimada <strong>${order.prepMinutes || 20} min</strong></p></article>
       </aside>
     </div>

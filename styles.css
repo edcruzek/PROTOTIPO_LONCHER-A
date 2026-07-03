@@ -2677,8 +2677,8 @@ p,
 
 .detail-layout {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 360px;
-  gap: 24px;
+  grid-template-columns: minmax(0, 1fr) minmax(320px, 380px);
+  gap: 20px;
 }
 
 .detail-main {
@@ -2821,15 +2821,18 @@ p,
 }
 
 .detail-side {
+  min-width: 0;
   display: grid;
   gap: 16px;
   align-content: start;
 }
 
 .detail-side article {
+  min-width: 0;
   display: grid;
   gap: 12px;
   padding: 20px;
+  overflow: visible;
 }
 
 .detail-side h2 {
@@ -2839,7 +2842,7 @@ p,
 
 .time-buttons {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(88px, 1fr));
   gap: 10px;
 }
 
@@ -2859,6 +2862,7 @@ p,
 }
 
 .detail-side input {
+  min-width: 0;
   flex: 1;
   border: 0;
   outline: 0;
@@ -2867,9 +2871,22 @@ p,
 
 .detail-side p {
   display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
   justify-content: space-between;
   gap: 12px;
   font-size: 13px;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}
+
+.detail-side p strong {
+  min-width: 0;
+  max-width: 58%;
+  margin-left: auto;
+  text-align: right;
+  white-space: normal;
+  overflow-wrap: anywhere;
 }
 
 .header-actions {
