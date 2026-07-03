@@ -411,16 +411,16 @@ function renderOrderDetail() {
         <article class="customer-card">
           <span class="flame">${order.priority ? "!" : "P"}</span>
           <div><h2>${order.customer}</h2><p>${order.phone || "Sin teléfono"}</p><p>${order.type}</p></div>
-          <div class="customer-facts"><p>Pedido recibido <strong>${order.time || order.date}</strong></p><p>Método de pago <strong>${order.payment || "Efectivo"}</strong></p><p>Referencia del pedido <strong>${order.notes || "Sin notas"}</strong></p></div>
+          <div class="customer-facts"><p>Pedido recibido <strong>${order.time || order.date}</strong></p><p>Método de pago <strong>${order.payment || "Efectivo"}</strong></p></div>
           <div class="status-wrap">${isActive ? statusBadge(order.status) : `<span class="table-status ${order.status.toLowerCase()}">${order.status}</span>`}</div>
         </article>
         <article class="products-card">
           <h2>Productos del pedido</h2>
           <table>
-            <thead><tr><th>Producto</th><th>Notas</th><th>Cant.</th><th>Precio unit.</th><th>Total</th></tr></thead>
+            <thead><tr><th>Producto</th><th>Cant.</th><th>Precio unit.</th><th>Total</th></tr></thead>
             <tbody>${order.products.map(productRow).join("")}</tbody>
           </table>
-          <div class="detail-note">Nota del cliente: ${order.notes || "Sin notas adicionales."}</div>
+          <div class="detail-note"><strong>Indicaciones del cliente</strong>${orderInstructions(order)}</div>
           <div class="detail-total"><p>Subtotal <strong>${money(orderTotal(order))}</strong></p><p>Total <strong>${money(orderTotal(order))}</strong></p></div>
         </article>
         <article class="timeline-card">${timeline(order)}</article>
@@ -435,7 +435,18 @@ function renderOrderDetail() {
 }
 
 function productRow(product) {
-  return `<tr><td>${product.name}</td><td>${product.note || "-"}</td><td>${product.quantity}</td><td>${money(product.unit)}</td><td>${money(product.quantity * product.unit)}</td></tr>`;
+  return `<tr><td>${product.name}</td><td>${product.quantity}</td><td>${money(product.unit)}</td><td>${money(product.quantity * product.unit)}</td></tr>`;
+}
+
+function orderInstructions(order) {
+  const productNotes = order.products
+    .filter((product) => product.note && product.note.trim())
+    .map((product) => `<li><strong>${product.name}:</strong> ${product.note}</li>`);
+  const generalNote = order.notes && order.notes.trim()
+    ? `<li><strong>General:</strong> ${order.notes}</li>`
+    : "";
+  const notes = [...productNotes, generalNote].filter(Boolean);
+  return notes.length ? `<ul>${notes.join("")}</ul>` : "<p>Sin indicaciones adicionales.</p>";
 }
 
 function timeline(order) {
@@ -1170,3 +1181,4 @@ document.addEventListener("click", (event) => {
 });
 
 render();
+
